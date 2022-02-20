@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
+    <style media="screen">
+      li {
+        list-style: none;
+        margin: 10px
+        color: green;
+      }
+      #bitch {
+        position: absolute;
+        left: 1500px;
+        colour: blue;
+        top: 100px;
+        animation-name: bitch;
+      }
+
+      #bitch1 {
+
+      }
+
+      @keyframes bitch {
+        0%   {background-color:black; left:1000px; top:0px;}
+        100%  {background-color:blue; left:0px; top:0px;}
+      }
+
+      h1 {
+        width: 280px;
+        height: 100px;
+        background-color: black;
+        position: relative;
+        animation-name: example;
+        animation-duration: 3s;
+      }
+
+      @keyframes example {
+        0%   {background-color:green; left:2000px; top:0px; color: black;}
+        100%  {background-color:black; left:0px; top:0px; }
+      }
+
+      h1 {
+        color: green;
+      }
+      p {
+
+        color: green;
+      }
+      button {
+        background-color: green;
+        border: none;
+        padding: 5px 10px;
+        display: inline-block;
+        font-family: 'Major Mono Display', monospace;
+      }
+      body {
+      background: black;
+      font-family: 'Major Mono Display', monospace;
+    }
+
+    .button {
+      transition-duration: 0.4;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    .button:hover {
+      background-color: black;
+      color: green
+    }
+
+    </style>
+    <meta charset="utf-8">
+    <title>Yugoslavian War Simulator</title>
+  </head>
+  <body>
+        <h1>Yugoslavian War Simulator</h1>
+    <ul id="hora">
+<li><button class="button" id="invade" onclick="invade(100)">Commit war crimes</button></li>
+&nbsp
+<li><button class="button" id="tank" onclick="tankInvade(50)">Send in Tanks</button></li>
+&nbsp
+<li><button class="button" id="plane" onclick="squadronInvade(75)">Send in Squadrons</button></li>
+&nbsp
+<li><button class="button" id="dnt" onclick="doNothing()">Restcok equipment</button></li>
+&nbsp
+<li><button class="button" id="surrender" onclick="Surrender()">Surrender</button></li>
+</ul>
+<ul id="bitch">
+<p>Manpower: <span id="manpower"></span></p>
+<p>Tanks: <span id="tanks"></span></p>
+<p>Planes: <span id="planes"></span></p>
+  </ul>
+  <div class="whore">
+<p>Health: <span id="health"></span></p>
+<p>Enemy Health: <span id="ehealth"></span></p>
+</div>
+  </body>
+      <script>
+        var health = 1000;
+        var tanks = 10000;
+        var manpower = 1000000;
+        var planes = 1000
+
+        var ehealth = 1000;
+        var etanks = 10000;
+        var emanpower = 1000000;
+        var eplanes = 1000
+
+        document.getElementById("health").innerText = health;
+        document.getElementById("ehealth").innerText = ehealth;
+
+        document.getElementById("tanks").innerText = tanks;
+        document.getElementById("manpower").innerText = manpower;
+        document.getElementById("planes").innerText = planes;
+
+        if (health < 1 ) {
+          end()
+        }
+
+        if (ehealth < 1) {
+          end();
+        }
+
+        function invade(amount) {
+          if (ehealth < 1 ){
+         	end();
+        } else if (manpower >= 700000 ) {
+          ehealth = ehealth - amount;
+          manpower = manpower - 700000;
+          document.getElementById("manpower").innerText = manpower;
+          document.getElementById("ehealth").innerText = ehealth;
+          confirm('You have chosen to break the rules of the geneva convention')
+          ai();
+        } else {
+          confirm("You don't have enough manpower to commit war crimes!")
+          return;
+          }
+        }
+        function tankInvade(amount) {
+          if (ehealth <= 1 ){
+            end();
+          } else if (tanks >= 1000 && manpower >= 10000) {
+          manpower = manpower - 10000;
+          document.getElementById("manpower").innerText = manpower;
+          tanks = tanks - 1000;
+          document.getElementById("tanks").innerText = tanks;
+          ehealth = ehealth - amount;
+          document.getElementById("ehealth").innerText = ehealth;
+          confirm('Tank invasion selected')
+          ai();
+        } else {
+          confirm("You don't have enough tanks!")
+        }
+        }
+
+        function squadronInvade(amount) {
+          if (ehealth < 1 ){
+         		end();
+          } else if (planes >= 500 && manpower >= 5000) {
+          planes = planes - 500;
+          document.getElementById("planes").innerText = planes;
+          manpower = manpower - 5000;
+          document.getElementById("manpower").innerText = manpower;
+          ehealth = ehealth - amount;
+          document.getElementById("ehealth").innerText = ehealth;
+          confirm('Squadron attack selected')
+          ai();
+        } else {
+          confirm("You don't have enough planes!")
+        }
+        }
+
+        function doNothing() {
+          confirm('Restock troops and equipment selected!')
+          health = health + 25;
+          manpower = manpower + 400000;
+          planes = planes + 500;
+          tanks = tanks + 2500;
+          document.getElementById("manpower").innerText = manpower;
+          document.getElementById("planes").innerText = planes;
+          document.getElementById("tanks").innerText = tanks;
+          document.getElementById("health").innerText = health;
+          ai();
+        };
+
+        function Surrender() {
+          confirm('You surrendered');
+          window.location.reload();
+        };
+
+        function end()  {
+          document.getElementById('bruh').style.animation = 'test';
+          window.location.reload();
+        };
+             function ai() {
+              confirm('ai turn')
+              if (health <= 1) {
+                Surrender();
+              } else if (ehealth <= 1) {
+                end();
+              }
+              var rndInt = Math.floor(Math.random() * 4) + 1;
+                    if (rndInt === 1 && emanpower >= 700000) {
+                       emanpower = emanpower - 700000;
+                       health = health - 100;
+                       document.getElementById("health").innerText = health;
+                     } else if (rndInt === 2 && emanpower >= 10000 && etanks >= 1000) {
+                         emanpower = emanpower - 10000;
+                         etanks = etanks - 1000;
+                         health = health - 50;
+                         document.getElementById("health").innerText = health;
+                       } else if (rndInt === 3 && emanpower >= 5000 && eplanes >= 500) {
+                          emanpower = emanpower - 5000;
+                          eplanes = eplanes - 500;
+                          health = health - 75;
+                          document.getElementById("health").innerText = health;
+                        } else if (rndInt === 4) {
+                          ehealth = ehealth + 25;
+                          emanpower = emanpower + 400000;
+                          eplanes = eplanes + 500;
+                          etanks = etanks + 2500;
+                          document.getElementById("ehealth").innerText = ehealth;
+                        } else {
+                          ehealth = ehealth + 25;
+                          emanpower = emanpower + 400000;
+                          eplanes = eplanes + 500;
+                          etanks = etanks + 2500;
+                          document.getElementById("ehealth").innerText = ehealth;
+                          console.log('break out')
+                        }
+                                 console.log(rndInt);
+                                  console.log(emanpower + " manpower");
+                                   console.log(eplanes + " planes");
+                                    console.log(etanks + " tanks");
+                                  };
+
+      </script>
+</html>
